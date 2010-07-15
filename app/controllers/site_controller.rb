@@ -65,7 +65,7 @@ class SiteController < ApplicationController
       @user.username = client.user.first["user"]["screen_name"]
       @user.followers = client.all_followers.size
     else
-      @user.create({
+      @user = User.create({
         :avatar_url => client.user.first["user"]["profile_image_url"],
         :twitter_id => client.user.first["id"],
         :name => client.user.first["name"],
@@ -73,9 +73,7 @@ class SiteController < ApplicationController
         :followers => client.all_followers.size
       })
       
-    end
-    
-    @follower_count = client.all_followers.size
+    end    
   end
   
 end
