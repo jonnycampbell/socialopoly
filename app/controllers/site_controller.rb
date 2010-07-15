@@ -56,7 +56,24 @@ class SiteController < ApplicationController
       session[:secret],
       :oauth_verifier => params[:oauth_verifier]
     )
-    logger.warn client.user.inspect
+    
+    @user = User.find_by_twitter_id(client.user["id"])
+    
+    if @user
+      @user.avatar_url = client.user["user"]["profile_image_url"]
+      @user.name = client.user["name"]
+      @user.username = client.user["user"]["screen_name"]
+      @user.followers = client.all_followers.size
+    else
+      @user.create({
+        :avatar_url => client.user["user"]["profile_image_url"]
+        :name => client.user["name"]
+        :username => client.user["user"]["screen_name"]
+        :followers => client.all_followers.size
+      })
+      
+    end
+    
     @follower_count = client.all_followers.size
   end
   
