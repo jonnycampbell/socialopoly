@@ -1,3 +1,14 @@
 <p>HEllo</p>
 
 <%= button_to "Connect", twitter_connect_path %>
+
+<%- if @users.any? -%>
+<ul>
+<%- @users.each do |user| -%>
+	<li>
+		<%= user.name %>,
+		<%= user.followers %>
+	</li>
+<%- end -%>
+</ul>
+<%- end -%>

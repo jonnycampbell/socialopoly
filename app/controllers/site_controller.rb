@@ -13,20 +13,10 @@ class SiteController < ApplicationController
   #@@consumer_secret = "0ynyPFutHSK9zlYtkK5fI7kvRx64JRCB5O73yRx94"
   
   def index
-
+    @users = User.find(:all, :order => "followers DESC")
   end
   
   def connect
-
-    
-    # oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
-    # session['token'] = oauth.request_token.token
-    # session['secret'] = oauth.request_token.secret
-    # 
-    # debugger 
-    # 
-    # oauth.set_callback_url(@@callback_url)
-    
     client = TwitterOAuth::Client.new(
         :consumer_key => @@consumer_key,
         :consumer_secret => @@consumer_secret
@@ -40,16 +30,6 @@ class SiteController < ApplicationController
   end
   
   def auth
-    # oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
-    # 
-    # logger.warn "TOKEN:" + session['token']
-    # logger.warn "SECRET:" + session['secret']
-    # 
-    # oauth.authorize_from_request(session['token'], session['secret'], params['oauth_verifier'])
-    # client = Twitter::Base.new(oauth)
-    # 
-    # @follower_count = client.follower_ids.size
-    # "blah"
     client = TwitterOAuth::Client.new  
     access_token = client.authorize(
       session[:token],
