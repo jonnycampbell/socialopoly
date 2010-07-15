@@ -23,11 +23,11 @@ class SiteController < ApplicationController
   
   def auth
     oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
-    oauth.authorize_from_request(session['token'], session['secret'], params['oauth_verifier'])
     
     STDERR.puts session['token']
     STDERR.puts session['secret']
     
+    oauth.authorize_from_request(session['token'], session['secret'], params['oauth_verifier'])
     client = Twitter::Base.new(oauth)
     
     @follower_count = client.follower_ids.size
