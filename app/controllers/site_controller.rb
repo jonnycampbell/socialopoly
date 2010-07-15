@@ -50,7 +50,7 @@ class SiteController < ApplicationController
     # 
     # @follower_count = client.follower_ids.size
     # "blah"
-    
+    client = TwitterOAuth::Client.new  
     access_token = client.authorize(
       session[:token],
       session[:secret],
