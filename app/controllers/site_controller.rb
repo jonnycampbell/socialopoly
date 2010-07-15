@@ -15,6 +15,8 @@ class SiteController < ApplicationController
     session['token'] = oauth.request_token.token
     session['secret'] = oauth.request_token.secret
 
+    debugger 
+    
     oauth.set_callback_url(@@callback_url)
     redirect_to "http://#{oauth.request_token.authorize_url}"
   end
@@ -22,11 +24,13 @@ class SiteController < ApplicationController
   def auth
     oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
     oauth.authorize_from_request(session['token'], session['secret'], params['oauth_verifier'])
-
+    
+    STDERR.puts session['token']
+    STDERR.puts session['secret']
+    
     client = Twitter::Base.new(oauth)
     
     @follower_count = client.follower_ids.size
-    debugger
     "blah"
   end
   
