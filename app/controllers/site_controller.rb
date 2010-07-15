@@ -31,7 +31,7 @@ class SiteController < ApplicationController
         :consumer_key => @@consumer_key,
         :consumer_secret => @@consumer_secret
     )
-    request_token = client.request_token(:oauth_callback => @@)
+    request_token = client.request_token(:oauth_callback => @@callback_url)
     session[:token] = request_token.token
     session[:secret] = request_token.secret
     
