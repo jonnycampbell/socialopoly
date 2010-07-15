@@ -57,18 +57,18 @@ class SiteController < ApplicationController
       :oauth_verifier => params[:oauth_verifier]
     )
     
-    @user = User.find_by_twitter_id(client.user.first["id"].to_i)
+    @user = User.find_by_twitter_id(client.user.first["id"])
     
     if @user
-      @user.avatar_url = client.user["user"]["profile_image_url"]
-      @user.name = client.user["name"]
-      @user.username = client.user["user"]["screen_name"]
+      @user.avatar_url = client.user.first["user"]["profile_image_url"]
+      @user.name = client.user.first["name"]
+      @user.username = client.user.first["user"]["screen_name"]
       @user.followers = client.all_followers.size
     else
       @user.create({
-        :avatar_url => client.user["user"]["profile_image_url"],
-        :name => client.user["name"],
-        :username => client.user["user"]["screen_name"],
+        :avatar_url => client.user.first["user"]["profile_image_url"],
+        :name => client.user.first["name"],
+        :username => client.user.first["user"]["screen_name"],
         :followers => client.all_followers.size
       })
       
