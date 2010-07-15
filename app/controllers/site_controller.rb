@@ -56,6 +56,7 @@ class SiteController < ApplicationController
       session[:secret],
       :oauth_verifier => params[:oauth_verifier]
     )
+    logger.warn client.user.inspect
     @follower_count = client.all_followers.size
   end
   
