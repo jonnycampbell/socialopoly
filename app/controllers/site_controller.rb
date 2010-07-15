@@ -19,27 +19,44 @@ class SiteController < ApplicationController
   def connect
 
     
-    oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
-    session['token'] = oauth.request_token.token
-    session['secret'] = oauth.request_token.secret
-
-    debugger 
+    # oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
+    # session['token'] = oauth.request_token.token
+    # session['secret'] = oauth.request_token.secret
+    # 
+    # debugger 
+    # 
+    # oauth.set_callback_url(@@callback_url)
     
-    oauth.set_callback_url(@@callback_url)
-    redirect_to "http://#{oauth.request_token.authorize_url}"
+    client = TwitterOAuth::Client.new(
+        :consumer_key => @@consumer_key,
+        :consumer_secret => @@consumer_secret
+    )
+    request_token = client.request_token(:oauth_callback => @@)
+    session[:token] = request_token.token
+    session[:secret] = request_token.secret
+    
+    # redirect_to "http://#{oauth.request_token.authorize_url}"
+    redirect_to request_token.authorize_url
   end
   
   def auth
-    oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
+    # oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
+    # 
+    # logger.warn "TOKEN:" + session['token']
+    # logger.warn "SECRET:" + session['secret']
+    # 
+    # oauth.authorize_from_request(session['token'], session['secret'], params['oauth_verifier'])
+    # client = Twitter::Base.new(oauth)
+    # 
+    # @follower_count = client.follower_ids.size
+    # "blah"
     
-    logger.warn "TOKEN:" + session['token']
-    logger.warn "SECRET:" + session['secret']
-    
-    oauth.authorize_from_request(session['token'], session['secret'], params['oauth_verifier'])
-    client = Twitter::Base.new(oauth)
-    
-    @follower_count = client.follower_ids.size
-    "blah"
+    access_token = client.authorize(
+      session[:token],
+      session[:secret],
+      :oauth_verifier => params[:oauth_verifier]
+    )
+    @follower_count = client.all_followers.size
   end
   
 end
