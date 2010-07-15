@@ -66,9 +66,9 @@ class SiteController < ApplicationController
       @user.followers = client.all_followers.size
     else
       @user.create({
-        :avatar_url => client.user["user"]["profile_image_url"]
-        :name => client.user["name"]
-        :username => client.user["user"]["screen_name"]
+        :avatar_url => client.user["user"]["profile_image_url"],
+        :name => client.user["name"],
+        :username => client.user["user"]["screen_name"],
         :followers => client.all_followers.size
       })
       
