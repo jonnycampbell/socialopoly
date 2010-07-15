@@ -24,8 +24,8 @@ class SiteController < ApplicationController
   def auth
     oauth = Twitter::OAuth.new(@@consumer_key, @@consumer_secret)
     
-    logger.warn puts session['token']
-    logger.warn session['secret']
+    logger.warn "TOKEN:" + session['token']
+    logger.warn "SECRET:" + session['secret']
     
     oauth.authorize_from_request(session['token'], session['secret'], params['oauth_verifier'])
     client = Twitter::Base.new(oauth)
