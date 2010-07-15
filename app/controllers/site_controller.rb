@@ -57,7 +57,7 @@ class SiteController < ApplicationController
       :oauth_verifier => params[:oauth_verifier]
     )
     
-    @user = User.find_by_twitter_id(client.user["id"])
+    @user = User.find_by_twitter_id(client.user.first["id"].to_i)
     
     if @user
       @user.avatar_url = client.user["user"]["profile_image_url"]
