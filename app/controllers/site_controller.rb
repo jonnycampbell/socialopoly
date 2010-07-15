@@ -14,7 +14,7 @@ class SiteController < ApplicationController
     session['secret'] = oauth.request_token.secret
 
     oauth.set_callback_url(callback_url)
-    redirect_to oauth.request_token.authorize_url  
+    redirect_to "http://#{oauth.request_token.authorize_url}"
   end
   
   def auth
