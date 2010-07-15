@@ -1,8 +1,16 @@
 class SiteController < ApplicationController
   
   @@callback_url = 'http://socialopoly.heroku.com/auth'
+  
+  #@@callback_url = 'http://localhost:3000/auth'
+  
+  
   @@consumer_key = "HaiRIn5MeRsKvFzAMDwSdA"
+  
+  #@@consumer_key = "121910256-cqKSwqqBkHYnQ0hd49Wxq5hJr5eeNpRU8R1qNt2I"
+  
   @@consumer_secret = "w0XlgDN10lM91rR1WTjBU0IBAmK9wnuGDxbVjcWM5a4"
+  #@@consumer_secret = "0ynyPFutHSK9zlYtkK5fI7kvRx64JRCB5O73yRx94"
   
   def index
 
