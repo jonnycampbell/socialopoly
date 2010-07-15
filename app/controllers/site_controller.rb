@@ -41,14 +41,14 @@ class SiteController < ApplicationController
     
     if @user
       @user.avatar_url = client.user.first["user"]["profile_image_url"]
-      @user.name = client.user.first["name"]
+      @user.name = client.user.first["user"]["name"]
       @user.username = client.user.first["user"]["screen_name"]
       @user.followers = client.all_followers.size
     else
       @user = User.create({
         :avatar_url => client.user.first["user"]["profile_image_url"],
         :twitter_id => client.user.first["id"],
-        :name => client.user.first["name"],
+        :name => client.user.first["user"]["name"],
         :username => client.user.first["user"]["screen_name"],
         :followers => client.all_followers.size
       })
